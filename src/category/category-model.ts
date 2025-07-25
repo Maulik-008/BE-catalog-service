@@ -9,7 +9,7 @@ const attributeSchema = new mongoose.Schema<Attribute>({
 });
 
 const optionSchema = new mongoose.Schema<PriceConfiguration>({
-    priceType: { Type: String, enum: ["base", "aditional"], required: true },
+    priceType: { type: String, enum: ["base", "additional"], required: true },
     availableOptions: [String],
 });
 
