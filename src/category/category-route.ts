@@ -7,13 +7,14 @@ import express, {
 import { CategoryService } from "./category-service";
 import { CategoryController } from "./category-controller";
 import categoryValidator from "./category-validator";
+import authentication from "../common/middlewares/authentication";
 
 const CategoryRouter = express.Router();
 
 const categoryService = new CategoryService();
 const categoryController = new CategoryController(categoryService);
 
-CategoryRouter.post("/", categoryValidator, (async (
+CategoryRouter.post("/", authentication, categoryValidator, (async (
     req: Request,
     res: Response,
     next: NextFunction,
@@ -21,7 +22,7 @@ CategoryRouter.post("/", categoryValidator, (async (
     await categoryController.create(req, res, next);
 }) as RequestHandler);
 
-CategoryRouter.put("/", categoryValidator, (async (
+CategoryRouter.put("/:id", authentication, categoryValidator, (async (
     req: Request,
     res: Response,
     next: NextFunction,
@@ -29,7 +30,7 @@ CategoryRouter.put("/", categoryValidator, (async (
     await categoryController.update(req, res, next);
 }) as RequestHandler);
 
-CategoryRouter.delete("/", (async (
+CategoryRouter.delete("/:id", authentication, (async (
     req: Request,
     res: Response,
     next: NextFunction,
@@ -37,7 +38,7 @@ CategoryRouter.delete("/", (async (
     await categoryController.delete(req, res, next);
 }) as RequestHandler);
 
-CategoryRouter.get("/", (async (
+CategoryRouter.get("/", authentication, (async (
     req: Request,
     res: Response,
     next: NextFunction,
@@ -45,7 +46,7 @@ CategoryRouter.get("/", (async (
     await categoryController.getAll(req, res, next);
 }) as RequestHandler);
 
-CategoryRouter.get("/:id", (async (
+CategoryRouter.get("/:id", authentication, (async (
     req: Request,
     res: Response,
     next: NextFunction,
